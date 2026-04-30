@@ -385,7 +385,7 @@ function StageStep({ stage, index, stageData, previousComplete, onToggle, onUpda
           {data.milestones.map((m: any, mi: number)=>(
             <div key={mi} style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:8}}>
               <input type="checkbox" checked={m.checked} onChange={()=>onToggle(stage,mi)}
-                style={{marginTop:2,accentColor:"#9CA3AF",flexShrink:0,width:15,height:15,cursor:"pointer"}}/>
+                style={{marginTop:2,accentColor:"#9CA3AF",flexShrink:0,width:15,height:15,cursor:"pointer",colorScheme:"light"}}/>
               <input value={m.text} onChange={e=>onUpdateText(stage,mi,e.target.value)}
                 style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:13,
                   color:m.checked?C.textLight:C.textDark,textDecoration:m.checked?"line-through":"none",
@@ -418,7 +418,7 @@ function StageStep({ stage, index, stageData, previousComplete, onToggle, onUpda
             <div style={{fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:".05em",color:C.textMid,marginBottom:5}}>Notes</div>
             <textarea value={data.context} onChange={e=>onContextChange(stage,e.target.value)}
               placeholder={`Context or notes for ${stage}…`} rows={2}
-              style={{width:"100%",border:`1px solid ${C.border}`,borderRadius:6,fontSize:12,color:C.textDark,padding:"9px 11px",resize:"vertical",fontFamily:"inherit",boxSizing:"border-box"}}/>
+              style={{width:"100%",border:`1px solid ${C.border}`,borderRadius:6,fontSize:12,color:C.textDark,padding:"9px 11px",resize:"vertical",fontFamily:"inherit",boxSizing:"border-box",background:C.white,colorScheme:"light"}}/>
           </div>
         </div>
       )}
@@ -618,7 +618,7 @@ function NotesSection({ value, onChange }: { value: string; onChange: (v:string)
       <CardBody>
         <textarea value={value} onChange={e=>onChange(e.target.value)}
           placeholder="Add open items, risks, or action items here…" rows={4}
-          style={{width:"100%",border:`1px solid ${C.border}`,borderRadius:6,fontSize:13,color:C.textDark,padding:"10px 12px",resize:"vertical",boxSizing:"border-box",fontFamily:"inherit",background:C.white}}/>
+          style={{width:"100%",border:`1px solid ${C.border}`,borderRadius:6,fontSize:13,color:C.textDark,padding:"10px 12px",resize:"vertical",boxSizing:"border-box",fontFamily:"inherit",background:C.white,colorScheme:"light"}}/>
       </CardBody>
     </CollapsibleCard>
   );
