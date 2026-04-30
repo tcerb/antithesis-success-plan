@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+// @ts-ignore
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import "./index.css";
 
@@ -560,7 +561,7 @@ function GoalsSection({ goals, onGoalChange, onGoalAdd, onGoalRemove, onWorkstre
 
 // ── Meetings ──────────────────────────────────────────────────
 function TouchpointsSection({ meetings, onMeetingChange, onMeetingAdd, onMeetingRemove, events, onEventChange, onEventAdd, onEventRemove }: any) {
-  const Th = ({children,w}: {children: React.ReactNode; w?: string}) => (
+  const Th = ({children,w}: {children?: React.ReactNode; w?: string}) => (
     <th style={{padding:"8px 12px",background:C.lightGray,color:C.textMid,fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:".05em",textAlign:"left",width:w,borderBottom:`1px solid ${C.border}`}}>
       {children}
     </th>
