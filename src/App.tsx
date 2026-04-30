@@ -286,9 +286,9 @@ function UtilizationSection({ data, onChange }: { data: any; onChange: (k:string
         </div>
 
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>
-          <div style={{padding:"14px 16px",borderRight:`1px solid ${C.border}`}}>
+          <div style={{padding:"14px 16px",borderRight:`1px solid ${C.border}`,textAlign:"center"}}>
             <div style={{fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:C.textMid,marginBottom:6}}>Continuous test hours</div>
-            <EditableText value={data.testHours} onChange={v=>onChange("testHours",v)} placeholder="9,000" style={{fontSize:24,fontWeight:700,color:"#065F46"}}/>
+            <EditableText value={data.testHours} onChange={v=>onChange("testHours",v)} placeholder="9,000" style={{fontSize:24,fontWeight:700,color:"#065F46",textAlign:"center"}}/>
             {(()=>{
               const hrs = parseFloat((data.testHours||"").replace(/,/g,""));
               const months = isNaN(hrs) ? null : Math.round(hrs / 24 / 30);
@@ -297,15 +297,15 @@ function UtilizationSection({ data, onChange }: { data: any; onChange: (k:string
                 : <div style={{fontSize:10,color:C.textLight,marginTop:3}}>enter hours to calculate</div>;
             })()}
           </div>
-          <div style={{padding:"14px 16px",borderRight:`1px solid ${C.border}`}}>
+          <div style={{padding:"14px 16px",borderRight:`1px solid ${C.border}`,textAlign:"center"}}>
             <div style={{fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:C.textMid,marginBottom:6}}>Avg utilization</div>
-            <EditableText value={data.overall} onChange={v=>onChange("overall",v)} placeholder="78%" style={{fontSize:24,fontWeight:700,color:C.accentDark}}/>
+            <EditableText value={data.overall} onChange={v=>onChange("overall",v)} placeholder="78%" style={{fontSize:24,fontWeight:700,color:C.accentDark,textAlign:"center"}}/>
             <div style={{fontSize:10,color:C.textLight,marginTop:3}}>since contract start</div>
           </div>
-          <div style={{padding:"14px 16px",borderRight:`1px solid ${C.border}`}}>
+          <div style={{padding:"14px 16px",borderRight:`1px solid ${C.border}`,textAlign:"center"}}>
             <div style={{fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:C.textMid,marginBottom:6}}>Month-to-date</div>
-            <EditableText value={data.mtd} onChange={v=>onChange("mtd",v)} placeholder="65%" style={{fontSize:24,fontWeight:700,color:C.secondaryDark}}/>
-            <div style={{display:"flex",alignItems:"center",gap:4,marginTop:3,flexWrap:"nowrap"}}>
+            <EditableText value={data.mtd} onChange={v=>onChange("mtd",v)} placeholder="65%" style={{fontSize:24,fontWeight:700,color:C.secondaryDark,textAlign:"center"}}/>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:4,marginTop:3,flexWrap:"nowrap"}}>
               {isPos && <span style={{color:deltaCol,display:"flex",alignItems:"center",flexShrink:0}}><TrendUpIcon/></span>}
               {isNeg && <span style={{color:deltaCol,display:"flex",alignItems:"center",flexShrink:0}}><TrendDownIcon/></span>}
               <input value={data.mtdDelta} onChange={e=>onChange("mtdDelta",e.target.value)} placeholder="+8"
@@ -313,9 +313,9 @@ function UtilizationSection({ data, onChange }: { data: any; onChange: (k:string
               <span style={{fontSize:10,color:C.textLight,whiteSpace:"nowrap"}}>% pts vs prev month</span>
             </div>
           </div>
-          <div style={{padding:"14px 16px"}}>
+          <div style={{padding:"14px 16px",textAlign:"center"}}>
             <div style={{fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:C.textMid,marginBottom:6}}>Total tests</div>
-            <EditableText value={data.totalTests} onChange={v=>onChange("totalTests",v)} placeholder="350" style={{fontSize:24,fontWeight:700,color:"#065F46"}}/>
+            <EditableText value={data.totalTests} onChange={v=>onChange("totalTests",v)} placeholder="350" style={{fontSize:24,fontWeight:700,color:"#065F46",textAlign:"center"}}/>
             <div style={{fontSize:10,color:C.textLight,marginTop:3}}>since contract start</div>
           </div>
         </div>
@@ -385,7 +385,7 @@ function StageStep({ stage, index, stageData, previousComplete, onToggle, onUpda
           {data.milestones.map((m: any, mi: number)=>(
             <div key={mi} style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:8}}>
               <input type="checkbox" checked={m.checked} onChange={()=>onToggle(stage,mi)}
-                style={{marginTop:2,accentColor:color,flexShrink:0,width:15,height:15,cursor:"pointer"}}/>
+                style={{marginTop:2,accentColor:"#9CA3AF",flexShrink:0,width:15,height:15,cursor:"pointer"}}/>
               <input value={m.text} onChange={e=>onUpdateText(stage,mi,e.target.value)}
                 style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:13,
                   color:m.checked?C.textLight:C.textDark,textDecoration:m.checked?"line-through":"none",
@@ -618,7 +618,7 @@ function NotesSection({ value, onChange }: { value: string; onChange: (v:string)
       <CardBody>
         <textarea value={value} onChange={e=>onChange(e.target.value)}
           placeholder="Add open items, risks, or action items here…" rows={4}
-          style={{width:"100%",border:`1px solid ${C.border}`,borderRadius:6,fontSize:13,color:C.textDark,padding:"10px 12px",resize:"vertical",boxSizing:"border-box",fontFamily:"inherit"}}/>
+          style={{width:"100%",border:`1px solid ${C.border}`,borderRadius:6,fontSize:13,color:C.textDark,padding:"10px 12px",resize:"vertical",boxSizing:"border-box",fontFamily:"inherit",background:C.white}}/>
       </CardBody>
     </CollapsibleCard>
   );
@@ -632,7 +632,7 @@ export default function SuccessPlan() {
     {role:"Executive Sponsor", name:""},
     {role:"Technical Lead",    name:""},
   ]);
-  const [util,       setUtil]       = useState({overall:"",mtd:"",mtdDelta:"",testHours:"",totalTests:""});
+  const [util,       setUtil]       = useState({overall:"",mtd:"",mtdDelta:"",testHours:"9000",totalTests:""});
   const [bugs,       setBugs]       = useState({found:"",resolved:"",notable:""});
   const [stageData,  setStageData]  = useState(DEFAULT_STAGE_DATA);
   const [onboarding, setOnboarding] = useState({daysLeft:"",targetDate:"",milestone:"",linear:""});
@@ -700,7 +700,7 @@ export default function SuccessPlan() {
               {custContacts.map((c,i)=>(
                 <div key={i} style={{display:"flex",gap:6,alignItems:"baseline",flexWrap:"wrap"}}>
                   <input value={c.role} onChange={e=>updCustContact(i,"role",e.target.value)} placeholder="Role"
-                    style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:C.textMid,width:110,flexShrink:0}}/>
+                    style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:C.textMid,minWidth:0,flexShrink:1,flexBasis:80}}/>
                   <span style={{color:C.border,flexShrink:0}}>·</span>
                   <input value={c.name} onChange={e=>updCustContact(i,"name",e.target.value)} placeholder="Name"
                     style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:13,color:C.textDark,minWidth:0,flex:1}}/>
