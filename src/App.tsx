@@ -623,7 +623,7 @@ function NotesSection({ value, onChange }: { value: string; onChange: (v:string)
 // ── Root ──────────────────────────────────────────────────────
 export default function SuccessPlan() {
   const [info,         setInfo]         = useState({customer:"",csm:"",am:"",fde:"",contractStart:"",arr:""});
-  const [risks,        setRisks]        = useState([{text:""}]);
+  const [risks,        setRisks]        = useState([{text:"",mitigation:""}]);
   const [opps,         setOpps]         = useState([{text:""}]);
   const [custContacts, setCustContacts] = useState([
     {role:"Champion",          name:""},
@@ -762,20 +762,29 @@ export default function SuccessPlan() {
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:5}}>
               {risks.map((r,i)=>(
-                <div key={i} style={{display:"flex",alignItems:"flex-start",gap:6}}>
-                  <div style={{width:5,height:5,borderRadius:"50%",background:"#EA580C",flexShrink:0,marginTop:6}}/>
-                  <input value={r.text} onChange={e=>setRisks(rs=>rs.map((x,j)=>j===i?{text:e.target.value}:x))}
-                    placeholder="Describe a risk…"
-                    style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:12,color:"#7C2D12",flex:1,padding:0}}/>
-                  <button onClick={()=>setRisks(rs=>rs.filter((_,j)=>j!==i))}
-                    style={{border:"none",background:"none",cursor:"pointer",color:"#FCA572",fontSize:14,padding:0,lineHeight:1,flexShrink:0}}>×</button>
+                <div key={i} style={{marginBottom:8,paddingBottom:8,borderBottom:"1px solid #FED7AA"}}>
+                  <div style={{display:"flex",alignItems:"flex-start",gap:6}}>
+                    <div style={{width:5,height:5,borderRadius:"50%",background:"#EA580C",flexShrink:0,marginTop:6}}/>
+                    <input value={r.text} onChange={e=>setRisks(rs=>rs.map((x,j)=>j===i?{...x,text:e.target.value}:x))}
+                      placeholder="Describe a risk…"
+                      style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:12,fontWeight:600,color:"#7C2D12",flex:1,padding:0}}/>
+                    <button onClick={()=>setRisks(rs=>rs.filter((_,j)=>j!==i))}
+                      style={{border:"none",background:"none",cursor:"pointer",color:"#FCA572",fontSize:14,padding:0,lineHeight:1,flexShrink:0}}>×</button>
+                  </div>
+                  <div style={{display:"flex",alignItems:"flex-start",gap:6,marginTop:4,paddingLeft:11}}>
+                    <span style={{fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:"#C2410C",flexShrink:0,paddingTop:2}}>Mitigation:</span>
+                    <input value={r.mitigation} onChange={e=>setRisks(rs=>rs.map((x,j)=>j===i?{...x,mitigation:e.target.value}:x))}
+                      placeholder="Mitigation plan…"
+                      style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:12,color:"#9A3412",flex:1,padding:0}}/>
+                  </div>
                 </div>
               ))}
             </div>
-            <button onClick={()=>setRisks(rs=>[...rs,{text:""}])}
+            <button onClick={()=>setRisks(rs=>[...rs,{text:"",mitigation:""}])}
               style={{marginTop:6,border:"none",background:"none",cursor:"pointer",color:"#EA580C",fontSize:11,padding:0,fontFamily:"inherit",display:"flex",alignItems:"center",gap:4}}>
               <span style={{fontSize:14,lineHeight:1}}>+</span> Add risk
             </button>
+
           </div>
 
           {/* Strategic Opportunities */}
