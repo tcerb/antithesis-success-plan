@@ -355,14 +355,13 @@ function StageStep({ stage, index, stageData, previousComplete, onToggle, onUpda
   const total   = data.milestones.length;
   const pct     = total ? Math.round((checked/total)*100) : 0;
   const allDone = checked === total && total > 0;
-  const locked  = index > 0 && !previousComplete;
 
   return (
-    <div style={{marginBottom:8,borderRadius:8,border:`1px solid ${expanded?color:C.border}`,overflow:"hidden",opacity:locked?.5:1}}>
-      <div onClick={()=>!locked&&setExpanded((e: boolean)=>!e)} style={{
+    <div style={{marginBottom:8,borderRadius:8,border:`1px solid ${expanded?color:C.border}`,overflow:"hidden"}}>
+      <div onClick={()=>setExpanded((e: boolean)=>!e)} style={{
         display:"flex",alignItems:"center",gap:12,padding:"10px 14px",
         background:expanded?`${color}15`:C.white,
-        cursor:locked?"not-allowed":"pointer",userSelect:"none",
+        cursor:"pointer",userSelect:"none",
       }}>
         <div style={{width:28,height:28,borderRadius:"50%",background:allDone?color:`${color}22`,border:`2px solid ${color}`,
           display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
@@ -430,14 +429,11 @@ function EngagementSection({ stageData, onToggle, onUpdateText, onAdd, onRemove,
   return (
     <CollapsibleCard title="Engagement stage" accent={C.accent}>
       <CardBody>
-        {STAGES.map((stage,i)=>{
-          const prev = i===0 ? true : stageData[STAGES[i-1]].milestones.every((m: any)=>m.checked);
-          return (
-            <StageStep key={stage} stage={stage} index={i} stageData={stageData} previousComplete={prev}
-              onToggle={onToggle} onUpdateText={onUpdateText} onAdd={onAdd} onRemove={onRemove}
-              onContextChange={onContextChange} onboarding={onboarding} onOnboardingChange={onOnboardingChange}/>
-          );
-        })}
+        {STAGES.map((stage,i)=>(
+          <StageStep key={stage} stage={stage} index={i} stageData={stageData}
+            onToggle={onToggle} onUpdateText={onUpdateText} onAdd={onAdd} onRemove={onRemove}
+            onContextChange={onContextChange} onboarding={onboarding} onOnboardingChange={onOnboardingChange}/>
+        ))}
       </CardBody>
     </CollapsibleCard>
   );
@@ -626,7 +622,9 @@ function NotesSection({ value, onChange }: { value: string; onChange: (v:string)
 
 // ── Root ──────────────────────────────────────────────────────
 export default function SuccessPlan() {
-  const [info,         setInfo]         = useState({customer:"",csm:"",am:"",fde:"",contractStart:""});
+  const [info,         setInfo]         = useState({customer:"",csm:"",am:"",fde:"",contractStart:"",arr:""});
+  const [risks,        setRisks]        = useState([{text:""}]);
+  const [opps,         setOpps]         = useState([{text:""}]);
   const [custContacts, setCustContacts] = useState([
     {role:"Champion",          name:""},
     {role:"Executive Sponsor", name:""},
@@ -746,6 +744,62 @@ export default function SuccessPlan() {
             <span style={{fontSize:16,fontWeight:700,color:monthsLeft!==null&&monthsLeft<=3?C.danger:monthsLeft!==null&&monthsLeft<=6?"#D97706":C.success}}>
               {monthsLeft !== null ? monthsLeft : "—"}
             </span>
+          </div>
+          <div style={{display:"flex",gap:8,alignItems:"center",marginLeft:"auto"}}>
+            <span style={{fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:C.accentDark}}>ARR</span>
+            <input value={info.arr} onChange={e=>updInfo("arr",e.target.value)} placeholder="$250,000"
+              style={{border:`1px solid ${C.accentMid}`,borderRadius:6,padding:"4px 8px",fontSize:13,fontWeight:700,fontFamily:"inherit",outline:"none",color:C.accentDark,background:C.white,width:110}}/>
+          </div>
+        </div>
+
+        {/* Risks / Strategic Opportunities */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginTop:12}}>
+          {/* Risks */}
+          <div style={{padding:"12px 14px",background:"#FFF7ED",border:"1px solid #FED7AA",borderRadius:7}}>
+            <div style={{fontSize:9,fontWeight:800,textTransform:"uppercase",letterSpacing:".08em",color:"#9A3412",marginBottom:8,display:"flex",alignItems:"center",gap:8}}>
+              <span>⚠ Risks</span>
+              <div style={{flex:1,height:1,background:"#FED7AA"}}/>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:5}}>
+              {risks.map((r,i)=>(
+                <div key={i} style={{display:"flex",alignItems:"flex-start",gap:6}}>
+                  <div style={{width:5,height:5,borderRadius:"50%",background:"#EA580C",flexShrink:0,marginTop:6}}/>
+                  <input value={r.text} onChange={e=>setRisks(rs=>rs.map((x,j)=>j===i?{text:e.target.value}:x))}
+                    placeholder="Describe a risk…"
+                    style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:12,color:"#7C2D12",flex:1,padding:0}}/>
+                  <button onClick={()=>setRisks(rs=>rs.filter((_,j)=>j!==i))}
+                    style={{border:"none",background:"none",cursor:"pointer",color:"#FCA572",fontSize:14,padding:0,lineHeight:1,flexShrink:0}}>×</button>
+                </div>
+              ))}
+            </div>
+            <button onClick={()=>setRisks(rs=>[...rs,{text:""}])}
+              style={{marginTop:6,border:"none",background:"none",cursor:"pointer",color:"#EA580C",fontSize:11,padding:0,fontFamily:"inherit",display:"flex",alignItems:"center",gap:4}}>
+              <span style={{fontSize:14,lineHeight:1}}>+</span> Add risk
+            </button>
+          </div>
+
+          {/* Strategic Opportunities */}
+          <div style={{padding:"12px 14px",background:"#F0FDF4",border:"1px solid #BBF7D0",borderRadius:7}}>
+            <div style={{fontSize:9,fontWeight:800,textTransform:"uppercase",letterSpacing:".08em",color:"#166534",marginBottom:8,display:"flex",alignItems:"center",gap:8}}>
+              <span>✦ Strategic Opportunities</span>
+              <div style={{flex:1,height:1,background:"#BBF7D0"}}/>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:5}}>
+              {opps.map((o,i)=>(
+                <div key={i} style={{display:"flex",alignItems:"flex-start",gap:6}}>
+                  <div style={{width:5,height:5,borderRadius:"50%",background:C.success,flexShrink:0,marginTop:6}}/>
+                  <input value={o.text} onChange={e=>setOpps(os=>os.map((x,j)=>j===i?{text:e.target.value}:x))}
+                    placeholder="Describe an opportunity…"
+                    style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:12,color:"#14532D",flex:1,padding:0}}/>
+                  <button onClick={()=>setOpps(os=>os.filter((_,j)=>j!==i))}
+                    style={{border:"none",background:"none",cursor:"pointer",color:"#86EFAC",fontSize:14,padding:0,lineHeight:1,flexShrink:0}}>×</button>
+                </div>
+              ))}
+            </div>
+            <button onClick={()=>setOpps(os=>[...os,{text:""}])}
+              style={{marginTop:6,border:"none",background:"none",cursor:"pointer",color:C.success,fontSize:11,padding:0,fontFamily:"inherit",display:"flex",alignItems:"center",gap:4}}>
+              <span style={{fontSize:14,lineHeight:1}}>+</span> Add opportunity
+            </button>
           </div>
         </div>
       </div>
