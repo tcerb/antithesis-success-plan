@@ -771,11 +771,11 @@ export default function SuccessPlan() {
                     <button onClick={()=>setRisks(rs=>rs.filter((_,j)=>j!==i))}
                       style={{border:"none",background:"none",cursor:"pointer",color:"#FCA572",fontSize:14,padding:0,lineHeight:1,flexShrink:0}}>×</button>
                   </div>
-                  <div style={{display:"flex",alignItems:"flex-start",gap:6,marginTop:4,paddingLeft:11}}>
-                    <span style={{fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:"#C2410C",flexShrink:0,paddingTop:2}}>Mitigation:</span>
+                  <div style={{display:"flex",alignItems:"center",gap:5,marginTop:4,paddingLeft:11,flexWrap:"nowrap"}}>
+                    <span style={{fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:".06em",color:"#C2410C",flexShrink:0,whiteSpace:"nowrap"}}>Mitigation:</span>
                     <input value={r.mitigation} onChange={e=>setRisks(rs=>rs.map((x,j)=>j===i?{...x,mitigation:e.target.value}:x))}
-                      placeholder="Mitigation plan…"
-                      style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:12,color:"#9A3412",flex:1,padding:0}}/>
+                      placeholder="Enter mitigation plan…"
+                      style={{border:"none",outline:"none",background:"transparent",fontFamily:"inherit",fontSize:12,color:"#9A3412",flex:1,minWidth:0,padding:0}}/>
                   </div>
                 </div>
               ))}
